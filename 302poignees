@@ -1,0 +1,101 @@
+#!/usr/bin/env python2.7
+# -*- coding: utf-8 -*-
+
+import sys
+from math import *
+
+separe = "est ami avec"
+separe_2 = "est amie avec"
+guys = {}
+
+def     parsing_file(_file):
+   for line in _file:
+      if (line.find(separe) != -1):
+         line = line.replace(separe, "")
+         tmp = line.split(" ")
+         tmp2 = ""
+         for line in tmp:
+            if (line != ""):
+               if (tmp2 == ""):
+                  tmp2 = line
+               else:
+                  tmp2 = tmp2 + " " + line
+               if (line.find("\n") != -1):
+                  guys[last_name].append(tmp2[:tmp2.rfind('\'')])
+                  tmp2 = tmp2[:tmp2.rfind('\'')]
+                  if ((tmp2 in guys.keys()) == False):
+                     guys[tmp2] = []
+                  guys[tmp2].append(last_name)
+                  tmp2 = ""
+            elif (line == ""):
+               if ((tmp2 in guys.keys()) == False):
+                  guys[tmp2] = []
+               last_name = tmp2
+               tmp2 = ""
+      elif (line.find(separe_2) != -1):
+         line = line.replace(separe_2, "")
+         tmp = line.split(" ")
+         tmp2 = ""
+         for line in tmp:
+            if (line != ""):
+               if (tmp2 == ""):
+                  tmp2 = line
+               else:
+                  tmp2 = tmp2 + " " + line
+               if (line.find("\n") != -1):
+                  guys[last_name].append(tmp2[:tmp2.rfind('\'')])
+                  tmp2 = tmp2[:tmp2.rfind('\'')]
+                  if ((tmp2 in guys.keys()) == False):
+                     guys[tmp2] = []
+                  guys[tmp2].append(last_name)
+            elif (line == ""):
+               if ((tmp2 in guys.keys()) == False):
+                  guys[tmp2] = []
+               last_name = tmp2
+               tmp2 = ""
+
+def     Connection(name1, name2, lvl, passed):
+   if ((name1 in guys.keys()) == False):
+      return (-1)
+   if ((name2 in guys.keys()) == False):
+      return (-1)
+   tmp = dict(passed)
+   result = list()
+   if (name1 == name2):
+      return (0)
+   if ((name1 in guys[name2]) == True):
+      return (lvl + 1)
+   tmp[name2] = 1
+   for x in guys[name2]:
+      if ((x in tmp.keys()) == False):
+         toto = Connection(name1, x, lvl + 1, tmp)
+         if (toto != -1):
+            result.append(toto)
+   if (len(result) == 0):
+      return (-1)
+   return (min(result))
+
+def     main():
+   try:
+      file = open(sys.argv[1])
+      tmp = file.readlines()
+      parsing_file(tmp)
+   except:
+      print "argument not valid"
+      return 84
+   _len = len(sys.argv)
+   if (_len == 3):
+      print "toto"
+      return 0
+   elif (_len == 4):
+      dict_tmp = {}
+      lvl = Connection(sys.argv[2], sys.argv[3], 0, dict_tmp)
+      print "degré de séparation entre", sys.argv[2], "et", sys.argv[3], ":", lvl
+      return 0
+   else:
+      print "argument not valid"
+      return 84
+
+if __name__ == '__main__':
+   sys.exit(main())
+
