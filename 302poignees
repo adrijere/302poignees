@@ -75,6 +75,40 @@ def     Connection(name1, name2, lvl, passed):
       return (-1)
    return (min(result))
 
+def     print_name():
+   for x in sorted(guys.keys()):
+      print x
+   print
+
+def     print_matr_adj(passed):
+   tab = [[]]
+   cpt = 0
+   for x in sorted(guys.keys()):
+      tab.append([])
+      for x2 in sorted(guys.keys()):
+         if ((Connection(x, x2, 0, passed)) != 1):
+            tab[cpt].append(0)
+         else:
+            tab[cpt].append(1)
+      print (tab[cpt])
+      cpt = cpt + 1
+   print
+
+def     print_matr_base(lvl, passed, n):
+   tab = [[]]
+   cpt = 0
+   nv = 0
+   for x in sorted(guys.keys()):
+      tab.append([])
+      for x2 in sorted(guys.keys()):
+         nv = Connection(x, x2, 0, passed)
+         if (nv > n):
+            tab[cpt].append(0)
+         else:
+            tab[cpt].append(nv)
+      print (tab[cpt])
+      cpt = cpt + 1
+
 def     main():
    try:
       file = open(sys.argv[1])
@@ -84,11 +118,18 @@ def     main():
       print "argument not valid"
       return 84
    _len = len(sys.argv)
+   dict_tmp = {}                       
    if (_len == 3):
-      print "toto"
+      try:
+         n = int(sys.argv[2])
+      except:
+         print "Error with the second argument."
+         return 84
+      print_name()
+      print_matr_adj(dict_tmp)
+      print_matr_base(0, dict_tmp, n)
       return 0
    elif (_len == 4):
-      dict_tmp = {}
       lvl = Connection(sys.argv[2], sys.argv[3], 0, dict_tmp)
       print "degré de séparation entre", sys.argv[2], "et", sys.argv[3], ":", lvl
       return 0
