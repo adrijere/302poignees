@@ -80,6 +80,9 @@ def     print_name():
       print x
    print
 
+def     preprocess(input):
+   return input.strip("[],")
+
 def     print_matr_adj(passed):
    tab = [[]]
    cpt = 0
@@ -87,10 +90,10 @@ def     print_matr_adj(passed):
       tab.append([])
       for x2 in sorted(guys.keys()):
          if ((Connection(x, x2, 0, passed)) != 1):
-            tab[cpt].append(0)
+            tab[cpt].append('0')
          else:
-            tab[cpt].append(1)
-      print (tab[cpt])
+            tab[cpt].append('1')
+      print ' '.join(tab[cpt])
       cpt = cpt + 1
    print
 
@@ -103,10 +106,10 @@ def     print_matr_base(lvl, passed, n):
       for x2 in sorted(guys.keys()):
          nv = Connection(x, x2, 0, passed)
          if (nv > n):
-            tab[cpt].append(0)
+            tab[cpt].append('0')
          else:
-            tab[cpt].append(nv)
-      print (tab[cpt])
+            tab[cpt].append(str(nv))
+      print ' '.join(tab[cpt])
       cpt = cpt + 1
 
 def     main():
